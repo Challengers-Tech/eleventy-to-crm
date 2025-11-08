@@ -6,10 +6,6 @@
 [build.environment]
   NODE_VERSION = "18"
 
-# Netlify Forms configuration
-[[plugins]]
-  package = "@netlify/plugin-forms"
-
 # Redirects
 [[redirects]]
   from = "/admin/"
@@ -23,4 +19,4 @@
 
 # Enable Netlify Identity
 [context.production]
-  environment = { DEPLOY_PRIME_URL = "https://yourdomain.netlify.app" }
+  environment = { DEPLOY_PRIME_URL = "https://landingz.netlify.app" }
