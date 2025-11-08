@@ -1,0 +1,182 @@
+---
+title: "Lead Capture Platform"
+permalink: "/"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title }} - Choose Your Path</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .home-hero {
+      background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+      color: white;
+      padding: 100px 20px;
+      text-align: center;
+    }
+    .home-hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+    }
+    .home-hero p {
+      font-size: 1.5rem;
+      opacity: 0.9;
+    }
+    .landing-pages {
+      padding: 80px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .landing-pages h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 60px;
+    }
+    .pages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+    .page-card {
+      background: white;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .page-card:hover {
+      transform: translateY(-5px);
+      border-color: #2563eb;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+    .page-card .icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+    }
+    .page-card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      color: #1f2937;
+    }
+    .page-card p {
+      color: #6b7280;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .page-card .cta {
+      display: inline-block;
+      padding: 12px 28px;
+      background: #2563eb;
+      color: white;
+      border-radius: 6px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+    .page-card:hover .cta {
+      background: #1e40af;
+    }
+    .admin-section {
+      background: #f9fafb;
+      padding: 60px 20px;
+      text-align: center;
+    }
+    .admin-section h3 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+    .admin-section p {
+      font-size: 1.1rem;
+      color: #6b7280;
+      margin-bottom: 30px;
+    }
+    .admin-btn {
+      display: inline-block;
+      padding: 14px 32px;
+      background: #1f2937;
+      color: white;
+      border-radius: 6px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+    .admin-btn:hover {
+      background: #111827;
+    }
+  </style>
+  <script identity="netlify" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body>
+
+  <section class="home-hero">
+    <div class="container">
+      <h1>Welcome to Our Platform</h1>
+      <p>Choose the path that's right for you</p>
+    </div>
+  </section>
+
+  <section class="landing-pages">
+    <div class="container">
+      <h2>Our Solutions</h2>
+      <div class="pages-grid">
+
+        <a href="/product-demo/" class="page-card">
+          <div class="icon">🎯</div>
+          <h3>Product Demo</h3>
+          <p>See our platform in action with a personalized walkthrough tailored to your needs.</p>
+          <span class="cta">Schedule Demo</span>
+        </a>
+
+        <a href="/free-trial/" class="page-card">
+          <div class="icon">🚀</div>
+          <h3>Free Trial</h3>
+          <p>Try our platform free for 14 days. Full access, no credit card required.</p>
+          <span class="cta">Start Free Trial</span>
+        </a>
+
+        <a href="/enterprise/" class="page-card">
+          <div class="icon">🏢</div>
+          <h3>Enterprise</h3>
+          <p>Scalable solutions for large organizations with dedicated support and custom pricing.</p>
+          <span class="cta">Contact Sales</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="admin-section">
+    <div class="container">
+      <h3>Admin Access</h3>
+      <p>Manage your landing pages, create new ones, and customize content.</p>
+      <a href="/admin/" class="admin-btn">Access Admin Panel</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2024 Your Company. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>

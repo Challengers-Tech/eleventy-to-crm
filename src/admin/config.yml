@@ -1,0 +1,44 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "src/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "pages"
+    label: "Landing Pages"
+    folder: "src/pages"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Headline", name: "headline", widget: "string"}
+      - {label: "Subheadline", name: "subheadline", widget: "text"}
+      - {label: "Hero Image", name: "heroImage", widget: "image", required: false}
+      - label: "Features"
+        name: "features"
+        widget: "list"
+        fields:
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Description", name: "description", widget: "text"}
+          - {label: "Icon", name: "icon", widget: "string", required: false}
+      - label: "Call to Action"
+        name: "cta"
+        widget: "object"
+        fields:
+          - {label: "Button Text", name: "buttonText", widget: "string", default: "Get Started"}
+          - {label: "Success Message", name: "successMessage", widget: "text", default: "Thank you! We'll be in touch soon."}
+      - label: "Form Fields"
+        name: "formFields"
+        widget: "list"
+        fields:
+          - {label: "Label", name: "label", widget: "string"}
+          - {label: "Name", name: "name", widget: "string"}
+          - {label: "Type", name: "type", widget: "select", options: ["text", "email", "tel", "textarea"], default: "text"}
+          - {label: "Required", name: "required", widget: "boolean", default: true}
+          - {label: "Placeholder", name: "placeholder", widget: "string", required: false}
+      - {label: "Body", name: "body", widget: "markdown", required: false}
+      - {label: "Layout", name: "layout", widget: "hidden", default: "layouts/landing.njk"}
+      - {label: "Permalink", name: "permalink", widget: "string", hint: "e.g., /product-demo/ or /free-trial/"}

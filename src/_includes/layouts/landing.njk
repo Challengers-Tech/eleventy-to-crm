@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ description }}">
+  <title>{{ title }}</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script identity="netlify" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1>{{ headline }}</h1>
+      <p>{{ subheadline }}</p>
+      {% if heroImage %}
+      <img src="{{ heroImage }}" alt="{{ headline }}" class="hero-image">
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  {% if features and features.length > 0 %}
+  <section class="features">
+    <div class="container">
+      <h2>Why Choose Us</h2>
+      <div class="features-grid">
+        {% for feature in features %}
+        <div class="feature-card">
+          {% if feature.icon %}
+          <div class="icon">{{ feature.icon }}</div>
+          {% endif %}
+          <h3>{{ feature.title }}</h3>
+          <p>{{ feature.description }}</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- Additional Content -->
+  {% if body %}
+  <section class="content">
+    <div class="container">
+      {{ body | safe }}
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- CTA and Form Section -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>{{ cta.buttonText or "Get Started Today" }}</h2>
+      <p class="subtitle">Fill out the form below and we'll get in touch with you shortly.</p>
+
+      <form
+        name="lead-capture-{{ title | slug }}"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        action="/success/"
+        class="lead-form"
+      >
+        <!-- Hidden fields for Netlify -->
+        <input type="hidden" name="form-name" value="lead-capture-{{ title | slug }}">
+        <input type="hidden" name="page" value="{{ title }}">
+
+        <!-- Honeypot for spam protection -->
+        <p style="display: none;">
+          <label>Don't fill this out if you're human: <input name="bot-field"></label>
+        </p>
+
+        <!-- Dynamic Form Fields -->
+        {% for field in formFields %}
+        <div class="form-group">
+          <label for="{{ field.name }}">
+            {{ field.label }}{% if field.required %} *{% endif %}
+          </label>
+          {% if field.type == 'textarea' %}
+          <textarea
+            id="{{ field.name }}"
+            name="{{ field.name }}"
+            {% if field.placeholder %}placeholder="{{ field.placeholder }}"{% endif %}
+            {% if field.required %}required{% endif %}
+          ></textarea>
+          {% else %}
+          <input
+            type="{{ field.type }}"
+            id="{{ field.name }}"
+            name="{{ field.name }}"
+            {% if field.placeholder %}placeholder="{{ field.placeholder }}"{% endif %}
+            {% if field.required %}required{% endif %}
+          >
+          {% endif %}
+        </div>
+        {% endfor %}
+
+        <button type="submit" class="submit-btn">{{ cta.buttonText or "Get Started" }}</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; {{ site.currentYear or 2024 }} {{ site.title or "Your Company" }}. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Netlify Identity Widget for CMS login -->
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>

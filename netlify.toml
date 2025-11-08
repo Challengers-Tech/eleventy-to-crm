@@ -1,0 +1,26 @@
+[build]
+  command = "npm run build"
+  publish = "_site"
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+# Netlify Forms configuration
+[[plugins]]
+  package = "@netlify/plugin-forms"
+
+# Redirects
+[[redirects]]
+  from = "/admin/"
+  to = "/admin/index.html"
+  status = 200
+
+# Form notifications - trigger function on submission
+[[forms]]
+  # This configuration applies to all forms
+  # Forms will trigger the submission-created event
+
+# Enable Netlify Identity
+[context.production]
+  environment = { DEPLOY_PRIME_URL = "https://yourdomain.netlify.app" }
