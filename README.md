@@ -1,17 +1,18 @@
-# Sales Engine - Landing Pages with Netlify & SuiteCRM Integration
+# Sales Engine - Landing Pages with Netlify & EspoCRM Integration
 
-A modern, static landing page system built with Eleventy and Decap CMS, featuring automatic lead capture and SuiteCRM integration.
+A modern, static landing page system built with Eleventy and Decap CMS, featuring automatic lead capture and EspoCRM integration.
 
 ## Features
 
-- **3 Pre-built Landing Pages**: Product Demo, Free Trial, and Enterprise
+- **6 Pre-built Landing Pages**: Product Demo, Free Trial, Enterprise, Webinar, Free Guide, and Sales Assessment
 - **User-Friendly CMS**: Manage content without touching code
 - **Easy Page Creation**: Create new landing pages through the admin interface
 - **Netlify Forms**: Automatic form handling with spam protection
-- **SuiteCRM Integration**: Leads automatically sent to your CRM at crm.challengers.tech
+- **EspoCRM Integration**: Leads automatically sent to your CRM at crm.challengers.tech
 - **Fully Responsive**: Mobile-friendly design
 - **Fast Performance**: Static site generation for optimal speed
 - **SEO Friendly**: Clean markup and meta tags
+- **Multiple Funnel Stages**: Pages optimized for awareness, consideration, and decision stages
 
 ## Quick Start
 
@@ -67,14 +68,13 @@ The built site will be in the `_site` directory.
    - Go to Site settings > Identity > Services
    - Click "Enable Git Gateway"
 
-5. **Configure Environment Variables** (for SuiteCRM integration)
+5. **Configure Environment Variables** (for EspoCRM integration)
    - Go to Site settings > Build & deploy > Environment variables
-   - Add the following variables:
-     - `SUITECRM_URL`: https://crm.challengers.tech
-     - `SUITECRM_USERNAME`: Your SuiteCRM username
-     - `SUITECRM_PASSWORD`: Your SuiteCRM password
-     - `SUITECRM_CLIENT_ID`: Your OAuth2 client ID
-     - `SUITECRM_CLIENT_SECRET`: Your OAuth2 client secret
+   - Add the following variables (Option 1 - Recommended):
+     - `ESPOCRM_API_KEY`: Your EspoCRM API key
+   - Or use Option 2 (Basic Auth):
+     - `ESPOCRM_USERNAME`: Your EspoCRM username
+     - `ESPOCRM_PASSWORD`: Your EspoCRM password
 
 6. **Invite Yourself as Admin**
    - Go to Identity tab
@@ -108,12 +108,15 @@ sales-engine/
 │   ├── pages/
 │   │   ├── product-demo.md      # Product demo landing page
 │   │   ├── free-trial.md        # Free trial landing page
-│   │   └── enterprise.md        # Enterprise landing page
+│   │   ├── enterprise.md        # Enterprise landing page
+│   │   ├── webinar.md           # Webinar registration page
+│   │   ├── free-guide.md        # Resource download page
+│   │   └── sales-assessment.md  # Free assessment page
 │   ├── index.njk                # Home page
 │   └── success.html             # Form success page
 ├── netlify/
 │   └── functions/
-│       └── form-submission.js   # SuiteCRM integration function
+│       └── form-submission.js   # EspoCRM integration function
 ├── .eleventy.js                 # Eleventy configuration
 ├── netlify.toml                 # Netlify configuration
 ├── package.json
@@ -121,6 +124,8 @@ sales-engine/
 ```
 
 ## Landing Pages
+
+See [LANDING-PAGES.md](LANDING-PAGES.md) for detailed information about each page, including conversion strategies and A/B testing recommendations.
 
 ### 1. Product Demo (`/product-demo/`)
 Designed for prospects who want to see the product in action.
@@ -136,6 +141,21 @@ Optimized for sign-ups with minimal friction.
 Tailored for large organizations with complex needs.
 - Form fields: Name, Email, Company, Job Title, Phone, User Count, Current CRM, Requirements
 - Focus: Custom solutions and dedicated support
+
+### 4. Live Webinar (`/webinar/`)
+Educational event registration for building awareness.
+- Form fields: First Name, Last Name, Email, Company, Job Role, Biggest Challenge
+- Focus: Expert training, networking, and lead nurturing
+
+### 5. Free Sales Playbook (`/free-guide/`)
+High-value content download for lead generation.
+- Form fields: Name, Email, Company, Role, Company Size
+- Focus: Content marketing and email list building
+
+### 6. Free Sales Assessment (`/sales-assessment/`)
+Personalized consultation for qualifying high-intent leads.
+- Form fields: Name, Email, Company, Job Title, Phone, Team Size, Revenue Range, Challenge
+- Focus: Consultative selling and relationship building
 
 ## Creating New Landing Pages
 
@@ -183,50 +203,61 @@ cta:
 Additional content goes here (optional).
 ```
 
-## SuiteCRM Integration
+## EspoCRM Integration
 
 ### How It Works
 
 1. User submits a form on any landing page
 2. Netlify Forms captures the submission
 3. A Netlify Function (`form-submission.js`) is triggered
-4. The function authenticates with SuiteCRM API
-5. A new Lead is created in SuiteCRM with all form data
+4. The function authenticates with EspoCRM API (via API Key or Basic Auth)
+5. A new Lead is created in EspoCRM with all form data
 6. User sees success message
 
 ### Lead Mapping
 
-Form data is mapped to SuiteCRM Lead fields:
+Form data is mapped to EspoCRM Lead fields:
 
-- `name` or `first_name` → `first_name`
-- `last_name` or extracted from `name` → `last_name`
-- `email` → `email1`
-- `phone` → `phone_mobile`
-- `company` → `account_name`
+- `name` or `first_name` → `firstName`
+- `last_name` or extracted from `name` → `lastName`
+- `email` → `emailAddress`
+- `phone` → `phoneNumber`
+- `company` → `accountName`
 - `job_title` → `title`
 - `message` or `requirements` → `description`
-- Form page name → `lead_source_description`
+- Form page name → `sourceDescription`
 
-### Setting Up SuiteCRM API
+### Setting Up EspoCRM API
 
-1. **Create API User in SuiteCRM**
-   - Log in to SuiteCRM admin panel
-   - Create a new user for API access
-   - Note the username and password
+#### Option 1: API Key Authentication (Recommended)
 
-2. **Configure OAuth2**
-   - Go to Admin > OAuth2 Clients and Tokens
-   - Create a new client
-   - Note the Client ID and Secret
-   - Set appropriate scopes
+1. **Create API User in EspoCRM**
+   - Log in to EspoCRM admin panel
+   - Go to Administration > API Users
+   - Create a new API user or edit existing user
+   - Click "Generate New API Key"
+   - Copy the API key
 
-3. **Add Credentials to Netlify**
-   - Add the credentials as environment variables (see Deployment section above)
+2. **Add API Key to Netlify**
+   - Go to your Netlify site settings
+   - Navigate to Build & deploy > Environment variables
+   - Add variable: `ESPOCRM_API_KEY` with your API key value
 
-4. **Test Integration**
-   - Submit a form on your deployed site
-   - Check Netlify Functions logs for any errors
-   - Verify the lead appears in SuiteCRM
+#### Option 2: Basic Authentication (Alternative)
+
+1. **Create Regular User**
+   - Create a user account in EspoCRM with appropriate permissions
+   - Ensure the user has access to create Leads
+
+2. **Add Credentials to Netlify**
+   - Add `ESPOCRM_USERNAME` with the username
+   - Add `ESPOCRM_PASSWORD` with the password
+
+#### Testing the Integration
+
+1. Submit a form on your deployed site
+2. Check Netlify Functions logs for any errors
+3. Verify the lead appears in EspoCRM under Leads module
 
 ## Customization
 

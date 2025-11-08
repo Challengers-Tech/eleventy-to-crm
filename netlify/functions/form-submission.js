@@ -1,13 +1,13 @@
 /**
- * Netlify Function to handle form submissions and send to SuiteCRM
+ * Netlify Function to handle form submissions and send to EspoCRM
  * This function is triggered on form submission via Netlify Forms
  */
 
 const fetch = require('node-fetch');
 
-// SuiteCRM API configuration
-const SUITECRM_URL = 'https://crm.challengers.tech';
-const SUITECRM_API_ENDPOINT = `${SUITECRM_URL}/Api/V8/module`;
+// EspoCRM API configuration
+const ESPOCRM_URL = 'https://crm.challengers.tech';
+const ESPOCRM_API_ENDPOINT = `${ESPOCRM_URL}/api/v1`;
 
 exports.handler = async (event, context) => {
   // Only allow POST requests
@@ -37,36 +37,36 @@ exports.handler = async (event, context) => {
     console.log('Form submission received:', formName);
     console.log('Form data:', formData);
 
-    // Prepare lead data for SuiteCRM
+    // Prepare lead data for EspoCRM
     const leadData = {
-      data: {
-        type: 'Leads',
-        attributes: {
-          first_name: formData.first_name || formData.name?.split(' ')[0] || '',
-          last_name: formData.last_name || formData.name?.split(' ').slice(1).join(' ') || formData.name || 'Unknown',
-          email1: formData.email || '',
-          phone_mobile: formData.phone || '',
-          account_name: formData.company || '',
-          title: formData.job_title || '',
-          description: formData.message || formData.requirements || '',
-          lead_source: 'Website',
-          lead_source_description: `Landing Page: ${formData.page || formName}`,
-          status: 'New',
-          // Custom fields based on form type
-          ...(formData.team_size && { team_size_c: formData.team_size }),
-          ...(formData.user_count && { user_count_c: formData.user_count }),
-          ...(formData.industry && { industry_c: formData.industry }),
-          ...(formData.current_crm && { current_crm_c: formData.current_crm }),
-        }
-      }
+      firstName: formData.first_name || formData.name?.split(' ')[0] || '',
+      lastName: formData.last_name || formData.name?.split(' ').slice(1).join(' ') || formData.name || 'Unknown',
+      emailAddress: formData.email || '',
+      phoneNumber: formData.phone || '',
+      accountName: formData.company || '',
+      title: formData.job_title || formData.role || '',
+      description: formData.message || formData.requirements || formData.challenge || '',
+      source: 'Website',
+      sourceDescription: `Landing Page: ${formData.page || formName}`,
+      status: 'New',
+      // Additional fields based on form type
+      ...(formData.team_size && { teamSize: formData.team_size }),
+      ...(formData.user_count && { userCount: formData.user_count }),
+      ...(formData.industry && { industry: formData.industry }),
+      ...(formData.current_crm && { currentCrm: formData.current_crm }),
+      ...(formData.company_size && { companySize: formData.company_size }),
+      ...(formData.revenue_range && { revenueRange: formData.revenue_range }),
+      ...(formData.job_role && { jobRole: formData.job_role }),
     };
 
-    // Get SuiteCRM credentials from environment variables
-    const username = process.env.SUITECRM_USERNAME;
-    const password = process.env.SUITECRM_PASSWORD;
+    // Get EspoCRM credentials from environment variables
+    const apiKey = process.env.ESPOCRM_API_KEY;
+    const username = process.env.ESPOCRM_USERNAME;
+    const password = process.env.ESPOCRM_PASSWORD;
 
-    if (!username || !password) {
-      console.error('SuiteCRM credentials not configured');
+    // Check if credentials are configured
+    if (!apiKey && (!username || !password)) {
+      console.error('EspoCRM credentials not configured');
       // Still return success to user, but log the error
       return {
         statusCode: 200,
@@ -77,35 +77,24 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // Authenticate with SuiteCRM
-    const authResponse = await fetch(`${SUITECRM_URL}/Api/access_token`, {
+    let authHeader;
+
+    // Prefer API Key authentication (simpler and more secure)
+    if (apiKey) {
+      authHeader = `ApiKey ${apiKey}`;
+    } else {
+      // Fall back to Basic Auth if API key not available
+      const credentials = Buffer.from(`${username}:${password}`).toString('base64');
+      authHeader = `Basic ${credentials}`;
+    }
+
+    // Create lead in EspoCRM
+    const createLeadResponse = await fetch(`${ESPOCRM_API_ENDPOINT}/Lead`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        grant_type: 'password',
-        client_id: process.env.SUITECRM_CLIENT_ID || 'suite_crm_client',
-        client_secret: process.env.SUITECRM_CLIENT_SECRET || 'secret',
-        username: username,
-        password: password,
-      })
-    });
-
-    if (!authResponse.ok) {
-      throw new Error(`Authentication failed: ${authResponse.statusText}`);
-    }
-
-    const authData = await authResponse.json();
-    const accessToken = authData.access_token;
-
-    // Create lead in SuiteCRM
-    const createLeadResponse = await fetch(`${SUITECRM_API_ENDPOINT}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/vnd.api+json',
-        'Accept': 'application/vnd.api+json',
-        'Authorization': `Bearer ${accessToken}`
+        'X-Api-Key': apiKey || '', // EspoCRM also supports this header format
+        'Authorization': authHeader
       },
       body: JSON.stringify(leadData)
     });
@@ -116,13 +105,13 @@ exports.handler = async (event, context) => {
     }
 
     const leadResult = await createLeadResponse.json();
-    console.log('Lead created successfully in SuiteCRM:', leadResult.data.id);
+    console.log('Lead created successfully in EspoCRM:', leadResult.id);
 
     return {
       statusCode: 200,
       body: JSON.stringify({
         message: 'Form submitted and lead created successfully',
-        leadId: leadResult.data.id
+        leadId: leadResult.id
       })
     };
 
