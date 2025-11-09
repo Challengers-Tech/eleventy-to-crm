@@ -12,10 +12,9 @@
   to = "/admin/index.html"
   status = 200
 
-# Form notifications - trigger function on submission
-[[forms]]
-  # This configuration applies to all forms
-  # Forms will trigger the submission-created event
+# Form notifications - automatically trigger background function
+# The submission-created.js function will be called automatically
+# when any form is submitted on the site
 
 # Enable Netlify Identity
 [context.production]

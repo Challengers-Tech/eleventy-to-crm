@@ -38,6 +38,14 @@ npm run build
 
 The built site will be in the `_site` directory.
 
+### 4. Run Tests
+
+```bash
+npm test
+```
+
+This runs the Playwright test suite (36 comprehensive tests covering all landing pages, forms, navigation, responsiveness, and accessibility). See [TESTING.md](TESTING.md) for details.
+
 ## Deployment to Netlify
 
 ### Initial Setup
@@ -319,12 +327,12 @@ To view form submissions in Netlify:
 - Check that `data-netlify="true"` is present in the form
 - Look for errors in browser console
 
-### SuiteCRM Integration Not Working
+### EspoCRM Integration Not Working
 
 - Check environment variables are set correctly
 - View Netlify Function logs for error details
-- Verify SuiteCRM API credentials and permissions
-- Ensure SuiteCRM API is accessible from Netlify servers
+- Verify EspoCRM API credentials and permissions
+- Ensure EspoCRM API is accessible from Netlify servers
 
 ### Build Failures
 
@@ -338,7 +346,7 @@ For issues or questions:
 1. Check the Netlify documentation
 2. Review Eleventy documentation
 3. Check Decap CMS documentation
-4. Review SuiteCRM API documentation
+4. Review EspoCRM API documentation
 
 ## License
 
