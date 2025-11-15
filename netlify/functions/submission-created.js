@@ -54,7 +54,7 @@ exports.handler = async (event, context) => {
       accountName: formData.company || '',
       title: formData.job_title || formData.role || '',
       description: fullDescription,
-      source: 'Website',
+      source: 'Web Site',
       status: 'New',
       website: formData.website || ''
     };
