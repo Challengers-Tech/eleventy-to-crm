@@ -6,9 +6,14 @@ package-lock.json
 _site/
 dist/
 
-# Environment variables
+# Environment variables - NEVER COMMIT SECRETS
 .env
 .env.local
+.env.*.local
+*.key
+secret
+*-key.txt
+credentials.json
 
 # OS files
 .DS_Store
@@ -29,3 +34,9 @@ Thumbs.db
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Test artifacts and screenshots
+test-results/
+playwright-report/
+*.png
+!src/**/*.png

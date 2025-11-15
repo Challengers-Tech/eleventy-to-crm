@@ -139,9 +139,16 @@ async function main() {
 
     // Test API
     console.log('→ Testing API access...');
+    const apiKey = process.env.ESPOCRM_API_KEY;
+    if (!apiKey) {
+      console.log('⚠ ESPOCRM_API_KEY not set - skipping API test');
+      console.log('✓ Permissions saved\\n');
+      return;
+    }
+
     const response = await fetch(`${ESPOCRM_URL}/api/v1/Lead`, {
       headers: {
-        'X-Api-Key': '1233741af7c2aff2c10da0c4fead9abf',
+        'X-Api-Key': apiKey,
         'Content-Type': 'application/json',
       }
     });
