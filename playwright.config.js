@@ -40,6 +40,14 @@ module.exports = defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
+    {
+      name: 'live-integration',
+      use: {
+        ...devices['Desktop Chrome'],
+        baseURL: 'https://landingz.netlify.app',
+      },
+      testMatch: '**/espocrm-integration.spec.js',
+    },
   ],
 
   /* Run your local dev server before starting the tests */

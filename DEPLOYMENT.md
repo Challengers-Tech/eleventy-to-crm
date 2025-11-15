@@ -5,14 +5,14 @@
 ### Prerequisites
 - A GitHub/GitLab/Bitbucket account
 - A Netlify account (free tier is sufficient)
-- SuiteCRM credentials from crm.challengers.tech
+- EspoCRM credentials from crm.challengers.tech
 
 ### Step 1: Initialize Git Repository
 
 ```bash
 git init
 git add .
-git commit -m "Initial commit: Landing pages with CMS and SuiteCRM integration"
+git commit -m "Initial commit: Landing pages with CMS and EspoCRM integration"
 ```
 
 ### Step 2: Push to Remote Repository
@@ -45,15 +45,20 @@ git push -u origin main
 ### Step 5: Set Environment Variables
 
 1. Go to **Site settings** → **Environment variables**
-2. Add the following variables:
+2. Add the following variables (choose Option 1 OR Option 2):
+
+**Option 1: API Key Authentication (Recommended)**
 
 | Variable | Value | Description |
 |----------|-------|-------------|
-| `SUITECRM_URL` | `https://crm.challengers.tech` | Your SuiteCRM instance URL |
-| `SUITECRM_USERNAME` | `your_username` | SuiteCRM API user username |
-| `SUITECRM_PASSWORD` | `your_password` | SuiteCRM API user password |
-| `SUITECRM_CLIENT_ID` | `your_client_id` | OAuth2 client ID from SuiteCRM |
-| `SUITECRM_CLIENT_SECRET` | `your_client_secret` | OAuth2 client secret from SuiteCRM |
+| `ESPOCRM_API_KEY` | `your_api_key` | Your EspoCRM API key |
+
+**Option 2: Basic Authentication (Alternative)**
+
+| Variable | Value | Description |
+|----------|-------|-------------|
+| `ESPOCRM_USERNAME` | `your_username` | EspoCRM username |
+| `ESPOCRM_PASSWORD` | `your_password` | EspoCRM password |
 
 3. Click **Save**
 4. Trigger a new deploy for the variables to take effect
@@ -93,7 +98,7 @@ Your site will be available at: `https://[site-name].netlify.app`
 2. Fill out and submit the form
 3. You should be redirected to the success page
 
-### Verify in SuiteCRM
+### Verify in EspoCRM
 
 1. Log in to crm.challengers.tech
 2. Navigate to the Leads module
@@ -111,9 +116,9 @@ Your site will be available at: `https://[site-name].netlify.app`
 
 Check the following:
 1. Environment variables are set correctly in Netlify
-2. SuiteCRM API credentials are valid
+2. EspoCRM API credentials are valid
 3. View function logs for specific error messages
-4. Ensure SuiteCRM API is accessible (not blocked by firewall)
+4. Ensure EspoCRM API is accessible (not blocked by firewall)
 
 ### CMS Not Loading
 
@@ -128,37 +133,44 @@ Check the following:
 2. Ensure all dependencies are in package.json
 3. Verify Node version is 18 or higher
 
-## SuiteCRM API Setup
+## EspoCRM API Setup
 
-If you need to set up the SuiteCRM API:
+If you need to set up the EspoCRM API:
+
+### Option 1: API Key (Recommended)
 
 1. **Create API User**
-   - Log in to SuiteCRM as admin
-   - Go to Admin → User Management
-   - Create a new user for API access
+   - Log in to EspoCRM as admin
+   - Go to Administration → API Users
+   - Create a new API user or edit an existing user
    - Assign appropriate roles (needs access to create Leads)
 
-2. **Configure OAuth2 Client**
-   - Go to Admin → OAuth2 Clients and Tokens
-   - Create a new OAuth2 client
-   - Note the Client ID and Client Secret
-   - Set grant type to "Password"
-   - Save the credentials securely
+2. **Generate API Key**
+   - In the API User settings, click "Generate New API Key"
+   - Copy the generated API key
+   - Save it securely (you won't be able to see it again)
 
 3. **Test API Access**
    - Use a tool like Postman to test authentication
-   - Endpoint: `POST https://crm.challengers.tech/Api/access_token`
-   - Body:
-     ```json
-     {
-       "grant_type": "password",
-       "client_id": "your_client_id",
-       "client_secret": "your_client_secret",
-       "username": "api_user",
-       "password": "password"
-     }
+   - Endpoint: `GET https://crm.challengers.tech/api/v1/Lead`
+   - Headers:
      ```
-   - You should receive an access token
+     X-Api-Key: your_api_key
+     ```
+   - You should receive a list of leads
+
+### Option 2: Basic Authentication (Alternative)
+
+1. **Create User Account**
+   - Create a regular user in EspoCRM with appropriate permissions
+   - Ensure the user has access to create and read Leads
+
+2. **Test API Access**
+   - Endpoint: `GET https://crm.challengers.tech/api/v1/Lead`
+   - Headers:
+     ```
+     Authorization: Basic base64(username:password)
+     ```
 
 ## Updating Your Site
 
@@ -181,7 +193,7 @@ If you need to set up the SuiteCRM API:
 - [Netlify Documentation](https://docs.netlify.com)
 - [Decap CMS Documentation](https://decapcms.org/docs/)
 - [Eleventy Documentation](https://www.11ty.dev/docs/)
-- [SuiteCRM API Documentation](https://docs.suitecrm.com/developer/api/)
+- [EspoCRM API Documentation](https://docs.espocrm.com/development/api/)
 
 ## Next Steps
 
