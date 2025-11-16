@@ -115,6 +115,8 @@ exports.handler = async (event, context) => {
     let authHeader;
     if (apiKey) {
       authHeader = `ApiKey ${apiKey}`;
+      // print last 5 charsa of apiKey for verification
+      console.log(`Using API Key ending with: ${apiKey.slice(-5)}`);
       console.log('Using API Key authentication');
     } else {
       const credentials = Buffer.from(`${username}:${password}`).toString('base64');
