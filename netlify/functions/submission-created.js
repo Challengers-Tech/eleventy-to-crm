@@ -18,14 +18,31 @@ exports.handler = async (event, context) => {
     // Parse the Netlify form submission event
     const submission = JSON.parse(event.body);
 
-    // Extract form data from the submission
-    const formData = submission.data;
-    const formName = submission.form_name || 'unknown';
+    // Extract form data - handle both Netlify Forms format and direct POST format
+    let formData;
+    let formName;
+
+    if (submission.payload) {
+      // Netlify Forms format: { payload: { email: ..., name: ..., ... } }
+      formData = submission.payload;
+      formName = formData.form_name || submission.form_name || 'netlify-form';
+      console.log('📋 Detected Netlify Forms format');
+    } else if (submission.data) {
+      // Direct POST format from form-handler.js: { form_name: "...", data: { ... } }
+      formData = submission.data;
+      formName = submission.form_name || 'unknown';
+      console.log('📋 Detected direct POST format');
+    } else {
+      // Fallback: treat entire submission as form data
+      formData = submission;
+      formName = 'unknown';
+      console.log('📋 Using fallback format detection');
+    }
 
     console.log('✅ Form parsed successfully');
     console.log('📝 Form name:', formName);
     console.log('📊 Form data keys:', Object.keys(formData));
-    console.log('📧 Email:', formData.email);
+    console.log('📧 Email:', formData.email || formData.emailAddress);
     console.log('👤 Name fields:', { first: formData.first_name, last: formData.last_name, full: formData.name });
 
     // Build description with all extra form data
