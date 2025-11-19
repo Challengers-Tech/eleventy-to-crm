@@ -1,30 +1,27 @@
 // Register the site's stylesheet for the preview pane
 CMS.registerPreviewStyle('/css/style.css');
 
-// Get the h function and createClass from CMS
-const { h, createClass } = CMS;
-
 // Custom preview template for landing pages that matches layouts/landing.njk
-CMS.registerPreviewTemplate('pages', createClass({
+// Note: createClass and h are global variables exposed by Decap CMS
+var LandingPagePreview = createClass({
   render: function() {
-    const entry = this.props.entry;
-    const data = entry.get('data');
+    var entry = this.props.entry;
 
-    // Get field values
-    const title = data.get('title') || '';
-    const description = data.get('description') || '';
-    const headline = data.get('headline') || '';
-    const subheadline = data.get('subheadline') || '';
-    const heroImage = data.get('heroImage') || '';
-    const features = data.get('features') || [];
-    const cta = data.get('cta') || {};
-    const formFields = data.get('formFields') || [];
-    const body = this.props.widgetFor('body');
+    // Get field values using getIn for nested Immutable data
+    var title = entry.getIn(['data', 'title']) || '';
+    var description = entry.getIn(['data', 'description']) || '';
+    var headline = entry.getIn(['data', 'headline']) || '';
+    var subheadline = entry.getIn(['data', 'subheadline']) || '';
+    var heroImage = entry.getIn(['data', 'heroImage']) || '';
+    var features = entry.getIn(['data', 'features']) || [];
+    var cta = entry.getIn(['data', 'cta']) || {};
+    var formFields = entry.getIn(['data', 'formFields']) || [];
+    var body = this.props.widgetFor('body');
 
     // Convert Immutable objects to JS
-    const ctaObj = cta.toJS ? cta.toJS() : {};
-    const featuresArray = features.toJS ? features.toJS() : [];
-    const formFieldsArray = formFields.toJS ? formFields.toJS() : [];
+    var ctaObj = cta.toJS ? cta.toJS() : {};
+    var featuresArray = features.toJS ? features.toJS() : [];
+    var formFieldsArray = formFields.toJS ? formFields.toJS() : [];
 
     return h('div', {},
       // Hero Section
@@ -101,4 +98,7 @@ CMS.registerPreviewTemplate('pages', createClass({
       )
     );
   }
-}));
+});
+
+// Register the preview template for the 'pages' collection
+CMS.registerPreviewTemplate('pages', LandingPagePreview);
