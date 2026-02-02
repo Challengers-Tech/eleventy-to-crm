@@ -1,75 +1,63 @@
 ---
-title: "Start Your Free Trial"
-description: "Try our platform free for 14 days. No credit card required."
-headline: "14-Day Free Trial"
-subheadline: "Start closing more deals today. Full access to all premium features. No credit card required."
-layout: "layouts/landing.njk"
-permalink: "/free-trial/"
+title: 20-Minute Daily Yoga Fitness
+description: >-
+  Fitness needs to be is a necessary part of everyone's lifestyle leading to a
+  higher quality of life as one ages.  The program is for everyone, and is
+  intended to help build Fitness in one's everyday lifestyle.
+
+  The program attempts to do this by offering a daily 20-minute Yoga practice, offering the convenience of online practice, whether attending the team practice or using the day's class recording.
+
+  After committing one month of this practice, not only would one have realized the benefits of the exercises, but one would also be well on the way to making this a persistent lifestyle practice.
+headline: 20-Minute Daily Yoga Fitness
+subheadline: |
+  FREE:  1-Week Trial
 features:
-  - title: "Full Feature Access"
-    description: "Get complete access to all premium features during your trial period."
-    icon: "🚀"
-  - title: "No Credit Card"
-    description: "Start your trial immediately without any payment information."
-    icon: "💳"
-  - title: "Dedicated Support"
-    description: "Our team is here to help you succeed from day one."
-    icon: "🎧"
-  - title: "Easy Migration"
-    description: "Import your existing data in minutes with our simple setup wizard."
-    icon: "📊"
+  - title: Full Feature Access
+    description: "Get complete access to all available features during your trial
+      period, including: Access to all online classes and Access to all class
+      recordings"
+    icon: 🚀
+  - title: No Credit Card
+    description: Start your trial immediately without any payment information.  Join
+      us at any time, when you are ready
+    icon: 💳
+  - title: Dedicated Support
+    description: Our team is here to help you succeed from day one.  Questions and
+      comments are handled via DM, but if a 'one-on-one' call is requested, this
+      can also be scheduled.
+    icon: 🎧
 cta:
-  buttonText: "Start Free Trial"
-  successMessage: "Welcome aboard! Check your email for login credentials and setup instructions."
+  buttonText: Start Free Trial
+  successMessage: Welcome aboard! Check your email for login credentials and setup
+    instructions.
 formFields:
-  - label: "First Name"
-    name: "first_name"
-    type: "text"
+  - label: First Name
+    name: first_name
+    type: text
     required: true
-    placeholder: "John"
-  - label: "Last Name"
-    name: "last_name"
-    type: "text"
+    placeholder: ""
+  - label: Last Name
+    name: last_name
+    type: text
     required: true
-    placeholder: "Smith"
-  - label: "Work Email"
-    name: "email"
-    type: "email"
+    placeholder: ""
+  - label: Email
+    name: email
+    type: email
     required: true
-    placeholder: "john@company.com"
-  - label: "Company Name"
-    name: "company"
-    type: "text"
-    required: true
-    placeholder: "Your Company Inc."
-  - label: "Phone Number"
-    name: "phone"
-    type: "tel"
-    required: true
-    placeholder: "+1 (555) 123-4567"
-  - label: "Industry"
-    name: "industry"
-    type: "text"
+    placeholder: ""
+  - type: text
     required: false
-    placeholder: "e.g., Technology, Healthcare, etc."
+    label: Yoga Experience (No experience; Used for Stretching; Recently started;
+      Intermediate)
+    name: Yoga_Experience
+    placeholder: ""
+layout: layouts/landing.njk
+permalink: /free-trial/
 ---
-
-## Your 14-Day Trial Includes
-
-Everything you need to transform your sales process:
-
-- **Unlimited Users**: Invite your entire team at no extra cost
-- **Full CRM Features**: Contact management, deal tracking, and more
-- **Advanced Reporting**: Custom dashboards and analytics
-- **Email Integration**: Sync with Gmail, Outlook, and more
-- **Mobile Apps**: iOS and Android apps included
-- **Priority Support**: Get help when you need it
-
 ## Getting Started is Easy
 
 1. Fill out the form above
-2. Receive your login credentials via email
-3. Complete our 5-minute setup wizard
-4. Start managing your sales pipeline
+2. Receive your 'class' access via email
 
 No commitments. Cancel anytime during your trial.
