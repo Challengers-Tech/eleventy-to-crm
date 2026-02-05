@@ -15,11 +15,13 @@ var LandingPagePreview = createClass({
     var heroImage = entry.getIn(['data', 'heroImage']) || '';
     var features = entry.getIn(['data', 'features']) || [];
     var cta = entry.getIn(['data', 'cta']) || {};
+    var paymentButton = entry.getIn(['data', 'paymentButton']) || {};
     var formFields = entry.getIn(['data', 'formFields']) || [];
     var body = this.props.widgetFor('body');
 
     // Convert Immutable objects to JS
     var ctaObj = cta.toJS ? cta.toJS() : {};
+    var paymentButtonObj = paymentButton.toJS ? paymentButton.toJS() : {};
     var featuresArray = features.toJS ? features.toJS() : [];
     var formFieldsArray = formFields.toJS ? formFields.toJS() : [];
 
@@ -87,6 +89,19 @@ var LandingPagePreview = createClass({
               ctaObj.buttonText || 'Get Started'
             )
           )
+        )
+      ),
+
+      // Payment Button Section
+      paymentButtonObj.visible && paymentButtonObj.url && h('section', { className: 'payment-section' },
+        h('div', { className: 'container' },
+          h('a', {
+            href: paymentButtonObj.url,
+            className: 'payment-btn',
+            'aria-label': paymentButtonObj.ariaLabel || 'Proceed to payment page',
+            target: '_blank',
+            rel: 'noopener noreferrer'
+          }, paymentButtonObj.label || 'Purchase Now')
         )
       ),
 

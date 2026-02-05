@@ -30,6 +30,16 @@ collections:
         fields:
           - {label: "Button Text", name: "buttonText", widget: "string", default: "Get Started"}
           - {label: "Success Message", name: "successMessage", widget: "text", default: "Thank you! We'll be in touch soon."}
+      - label: "Payment Button"
+        name: "paymentButton"
+        widget: "object"
+        collapsed: true
+        required: false
+        fields:
+          - {label: "Show Button", name: "visible", widget: "boolean", default: false}
+          - {label: "Button Label", name: "label", widget: "string", default: "Purchase Now"}
+          - {label: "Payment URL", name: "url", widget: "string", hint: "Full URL to external payment page (e.g., Squarespace)"}
+          - {label: "Aria Label", name: "ariaLabel", widget: "string", default: "Proceed to payment page", hint: "Accessible label for screen readers", required: false}
       - label: "Form Fields"
         name: "formFields"
         widget: "list"

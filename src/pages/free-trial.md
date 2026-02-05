@@ -30,6 +30,11 @@ cta:
   buttonText: Start Free Trial
   successMessage: Welcome aboard! Check your email for login credentials and setup
     instructions.
+paymentButton:
+  visible: true
+  label: Start Your Membership
+  url: https://helixilk.squarespace.com/payment
+  ariaLabel: Start your yoga fitness membership on Squarespace
 formFields:
   - label: First Name
     name: first_name

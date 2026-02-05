@@ -131,6 +131,43 @@ body {
   margin-bottom: 50px;
 }
 
+/* Payment Button Section */
+.payment-section {
+  padding: 60px 0;
+  background: var(--background-alt);
+  text-align: center;
+}
+
+.payment-btn {
+  display: inline-block;
+  padding: 18px 48px;
+  background: var(--success-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.payment-btn:hover {
+  background: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.payment-btn:active {
+  transform: translateY(0);
+}
+
+.payment-btn:focus-visible {
+  outline: 3px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
 /* Form Styles */
 .lead-form {
   max-width: 600px;
@@ -276,5 +313,10 @@ body {
 
   .lead-form {
     padding: 30px 20px;
+  }
+
+  .payment-btn {
+    padding: 16px 36px;
+    font-size: 1.1rem;
   }
 }
